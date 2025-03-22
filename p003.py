@@ -12,7 +12,9 @@ ship_texture = load_texture_from_image(ship_image)
 ship_origin = Vector2(ship_texture.width/2, ship_texture.height/2)
 ship_source_rect = [0,0,ship_texture.width, ship_texture.height]
 ship_dest_rect = [get_screen_width()/2, get_screen_height()/2, ship_texture.width, ship_texture.height]
+
 CEN = ship_dest_rect[:2]
+
 ship_speed= 1000
 ship_pos = Vector2(0,0)
 ship_dir = Vector2(1,1)
