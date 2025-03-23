@@ -1,6 +1,7 @@
 from pyray import *
 from raylib import *
 from os.path import join
+import time
 
 level_map = [
     '1111111111111111111',
@@ -26,6 +27,15 @@ def get_blocks(level_map):
                 blocks.append(block)
     return blocks
 
+class Timer:
+    def __init__(self):
+        self.start_time=0.0
+    def add_time(self, t):
+        self.start_time += t
+    def restart_time(self):
+        self.start_time = 0.0
+    def get_time(self):
+        return str(self.start_time).split(".")[0]
 
 class Sprite:
     def __init__(self, pos, speed):
@@ -79,7 +89,6 @@ class Player(Sprite):
         draw_rectangle_v(self.pos, self.size, self.color)
         draw_circle_v(self.pos, 10, GREEN)
 
-
 class Block(Sprite):
     def __init__(self, pos, speed):
         super().__init__(pos, speed)
@@ -92,7 +101,7 @@ init_window(1920, 1080, 'base')
 
 player = Player(Vector2(400, 540), 500)
 blocks = get_blocks(level_map)
-
+timer = Timer()
 while not window_should_close():
     dt = get_frame_time()
     player.update(dt, blocks)
@@ -107,7 +116,8 @@ while not window_should_close():
 
     #
     player.draw()
-    draw_text("blocks: " + str(len(blocks)), 10, 10, 20, RED)
+    timer.add_time(get_frame_time())
+    draw_text("time: " + str(timer.get_time()), 10, 10, 20, RED)
 
     #
     end_drawing()
